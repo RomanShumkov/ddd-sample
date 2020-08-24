@@ -1,0 +1,13 @@
+App\Domain\FundsTransferring\Transaction\Transaction:
+  type: entity
+  repositoryClass: App\Persistence\Doctrine\FundsTransferring\TransactionMapper
+  id:
+    id:
+      type: Ramsey\Uuid\UuidInterface
+      generator:
+        strategy: CUSTOM
+      customIdGenerator:
+        class: Ramsey\Uuid\Doctrine\UuidGenerator
+#  fields:
+#    balance:
+#      type: bigint

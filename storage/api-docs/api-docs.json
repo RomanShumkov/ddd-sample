@@ -1,0 +1,632 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "DDD Sample App JSON API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/v1/funds-transfers": {
+            "post": {
+                "summary": "Transfer funds",
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/FundsTransfer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "New user created successfully",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/FundsTransfer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/funds-transfers/{id}": {
+            "get": {
+                "summary": "Get latest data of funds transfer",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/FundsTransfer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users": {
+            "post": {
+                "summary": "Create new user",
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "New user created successfully",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/v1/access-tokens": {
+            "post": {
+                "summary": "Create new access token",
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/AccessToken"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "New access token created successfully",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AccessToken"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/v1/financial-operations": {
+            "get": {
+                "summary": "Get financial operations",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "style": "deepObject",
+                        "schema": {
+                            "properties": {
+                                "user": {
+                                    "$ref": "#/components/schemas/FinancialOperation.query.filter.user"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "style": "deepObject",
+                        "schema": {
+                            "properties": {
+                                "number": {
+                                    "$ref": "#/components/schemas/FinancialOperation.query.page.number"
+                                },
+                                "size": {
+                                    "$ref": "#/components/schemas/FinancialOperation.query.page.size"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/FinancialOperation"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AccessToken": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiResourceObjectWithServerGeneratedId"
+                    },
+                    {
+                        "properties": {
+                            "type": {
+                                "enum": [
+                                    "access-tokens"
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "attributes": {
+                                "properties": {
+                                    "email": {
+                                        "$ref": "#/components/schemas/AccessToken.attributes.email"
+                                    },
+                                    "password": {
+                                        "$ref": "#/components/schemas/AccessToken.attributes.password"
+                                    },
+                                    "plainTextToken": {
+                                        "$ref": "#/components/schemas/AccessToken.attributes.plainTextToken"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "AccessToken.attributes.plainTextToken": {
+                "type": "string",
+                "readOnly": true
+            },
+            "AccessToken.attributes.email": {
+                "$ref": "#/components/schemas/User.attributes.email"
+            },
+            "AccessToken.attributes.password": {
+                "$ref": "#/components/schemas/User.attributes.password"
+            },
+            "FinancialOperation": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiResourceObjectWithServerGeneratedId"
+                    },
+                    {
+                        "properties": {
+                            "type": {
+                                "enum": [
+                                    "financial-operations"
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "attributes": {
+                                "properties": {
+                                    "amount": {
+                                        "$ref": "#/components/schemas/FinancialOperation.attributes.amount"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "relationships": {
+                                "properties": {
+                                    "user": {
+                                        "properties": {
+                                            "data": {
+                                                "properties": {
+                                                    "type": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "users"
+                                                        ]
+                                                    },
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "1"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "counterparty": {
+                                        "properties": {
+                                            "data": {
+                                                "properties": {
+                                                    "type": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "users"
+                                                        ]
+                                                    },
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "2"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "FinancialOperation.attributes.amount": {
+                "title": "Funds amount in smallest unit of account",
+                "type": "string",
+                "example": "10"
+            },
+            "FinancialOperation.query.filter.user": {
+                "type": "integer",
+                "minimum": "1",
+                "example": "1"
+            },
+            "FinancialOperation.query.page.number": {
+                "type": "integer",
+                "minimum": "1",
+                "example": "1"
+            },
+            "FinancialOperation.query.page.size": {
+                "type": "integer",
+                "maximum": 100,
+                "minimum": "1",
+                "example": 10
+            },
+            "FundsTransfer": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiResourceObjectWithClientGeneratedId"
+                    },
+                    {
+                        "properties": {
+                            "type": {
+                                "enum": [
+                                    "funds-transfers"
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "attributes": {
+                                "properties": {
+                                    "amount": {
+                                        "$ref": "#/components/schemas/FundsTransfer.attributes.amount"
+                                    },
+                                    "state": {
+                                        "$ref": "#/components/schemas/FundsTransfer.attributes.state"
+                                    },
+                                    "isFinalState": {
+                                        "$ref": "#/components/schemas/FundsTransfer.attributes.isFinalState"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "relationships": {
+                                "properties": {
+                                    "origin": {
+                                        "properties": {
+                                            "data": {
+                                                "properties": {
+                                                    "type": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "users"
+                                                        ]
+                                                    },
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "1"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "destination": {
+                                        "properties": {
+                                            "data": {
+                                                "properties": {
+                                                    "type": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "users"
+                                                        ]
+                                                    },
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "2"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "FundsTransfer.attributes.amount": {
+                "title": "Funds amount in smallest unit of account",
+                "type": "string",
+                "example": "10"
+            },
+            "FundsTransfer.attributes.state": {
+                "type": "string",
+                "enum": [
+                    "transferring",
+                    "insufficient_balance",
+                    "completed"
+                ],
+                "readOnly": true
+            },
+            "FundsTransfer.attributes.isFinalState": {
+                "type": "boolean",
+                "readOnly": true
+            },
+            "User": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiResourceObjectWithServerGeneratedId"
+                    },
+                    {
+                        "properties": {
+                            "type": {
+                                "enum": [
+                                    "users"
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "attributes": {
+                                "properties": {
+                                    "email": {
+                                        "$ref": "#/components/schemas/User.attributes.email"
+                                    },
+                                    "password": {
+                                        "$ref": "#/components/schemas/User.attributes.password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "User.attributes.email": {
+                "type": "string",
+                "format": "email",
+                "writeOnly": true
+            },
+            "User.attributes.password": {
+                "type": "string",
+                "writeOnly": true,
+                "example": "secret"
+            },
+            "JsonApiResourceObjectWithServerGeneratedId": {
+                "title": "JSON:API Resource Object",
+                "properties": {
+                    "type": {
+                        "$ref": "#/components/schemas/JsonApiType"
+                    },
+                    "id": {
+                        "$ref": "#/components/schemas/JsonApiId"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/JsonApiLinksObject"
+                    }
+                },
+                "type": "object"
+            },
+            "JsonApiResourceObjectWithClientGeneratedId": {
+                "title": "JSON:API Resource Object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiResourceObjectWithServerGeneratedId"
+                    },
+                    {
+                        "properties": {
+                            "id": {
+                                "format": "uuid",
+                                "readOnly": false
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "JsonApiType": {
+                "title": "JSON:API type Member",
+                "type": "string"
+            },
+            "JsonApiId": {
+                "title": "JSON:API id Member",
+                "type": "string",
+                "readOnly": true
+            },
+            "JsonApiLinksObject": {
+                "title": "JSON:API Links Object",
+                "readOnly": true,
+                "example": {
+                    "self": "http://example/com/users/1"
+                },
+                "anyOf": [
+                    {
+                        "properties": {
+                            "self": {
+                                "$ref": "#/components/schemas/JsonApiLink"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "related": {
+                                "$ref": "#/components/schemas/JsonApiLink"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "first": {
+                                "$ref": "#/components/schemas/JsonApiLink"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "last": {
+                                "$ref": "#/components/schemas/JsonApiLink"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "prev": {
+                                "$ref": "#/components/schemas/JsonApiLink"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "properties": {
+                            "next": {
+                                "$ref": "#/components/schemas/JsonApiLink"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "JsonApiLink": {
+                "title": "JSON:API Link",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/URL"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiLinkObject"
+                    }
+                ]
+            },
+            "URL": {
+                "type": "string",
+                "format": "url",
+                "example": "https://example.com/"
+            },
+            "JsonApiLinkObject": {
+                "title": "JSON:API Link Object",
+                "properties": {
+                    "href": {
+                        "type": "string"
+                    },
+                    "meta": {
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "Token Authentication": {
+                "type": "http",
+                "scheme": "bearer",
+                "description": "https://swagger.io/docs/specification/authentication/bearer-authentication/",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "Token Authentication": []
+        }
+    ]
+}

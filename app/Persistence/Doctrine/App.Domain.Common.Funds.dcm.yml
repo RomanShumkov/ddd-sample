@@ -1,0 +1,5 @@
+App\Domain\Common\Funds:
+  type: embeddable
+  fields:
+    amount:
+      type: bigint

@@ -1,0 +1,9 @@
+App\Domain\FundsTransferring\Account\Account:
+  type: entity
+  repositoryClass: App\Persistence\Doctrine\FundsTransferring\AccountMapper
+  id:
+    id:
+      type: integer
+  embedded:
+    balance:
+      class: App\Domain\Common\Funds
