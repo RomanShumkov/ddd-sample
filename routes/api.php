@@ -55,7 +55,8 @@ JsonApi::register('default')->withNamespace('Api')->routes(function (RouteRegist
      *         required=true,
      *         @OA\Schema(
      *             type="string",
-     *             example="1"
+     *             format="uuid",
+     *             example="3fa85f64-5717-4562-b3fc-2c963f66afa6",
      *         )
      *     ),
      *     @OA\Response(
