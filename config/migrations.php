@@ -73,7 +73,7 @@ return [
         |
         */
         'schema'    => [
-            'filter' => '/^(?!migrations|password_resets|failed_jobs|users|funds_transfers).*$/'
+            'filter' => '/^(?!migrations|password_resets|failed_jobs|users|funds_transfers|financial_operations).*$/'
         ],
         /*
         |--------------------------------------------------------------------------

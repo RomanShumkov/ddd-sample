@@ -59,7 +59,7 @@ class FundsTransferrer implements FundsTransferringService, UserRegistrationEven
         $destinationAccount = $this->mustFindAccount($destinationAccountId);
         $originAccount->transfer($funds, $destinationAccount);
 
-        $transaction = new Transaction($transferId, $originAccount, $destinationAccount, $funds);
+        $transaction = new Transaction($transferId);
         $this->transactions->store($transaction);
 
         $snapshot = $this->snapshotFactory->createFundsTransferSnapshot(

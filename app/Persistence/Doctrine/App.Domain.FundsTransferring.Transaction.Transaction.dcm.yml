@@ -8,6 +8,3 @@ App\Domain\FundsTransferring\Transaction\Transaction:
         strategy: CUSTOM
       customIdGenerator:
         class: Ramsey\Uuid\Doctrine\UuidGenerator
-#  fields:
-#    balance:
-#      type: bigint

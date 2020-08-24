@@ -9,7 +9,7 @@ class Account
 {
     private int $id;
 
-    private ?Funds $balance = null;
+    private Funds $balance;
 
     public function __construct(int $id, Funds $initialBalance)
     {
