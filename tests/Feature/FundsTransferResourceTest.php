@@ -135,6 +135,10 @@ class FundsTransferResourceTest extends TestCase
         $this->assertResponseStatus(self::HTTP_STATUS_BAD_REQUEST, $response->getStatusCode());
 
         $this->authenticate($destinationUser->attribute('email'), $destinationUserPassword);
+
+        $response = $this->tryGetFundsTransfer($transfer->id());
+        $this->assertResponseStatus(self::HTTP_STATUS_FORBIDDEN, $response->getStatusCode());
+
         $financialOperations = $this->mustGetFinancialOperations($destinationUser->id());
         $financialOperation = array_pop($financialOperations);
         $this->assertArraySubset(
@@ -189,13 +193,18 @@ class FundsTransferResourceTest extends TestCase
 
     private function mustGetFundsTransfer($id): ResourceObject
     {
-        $request = $this->apiRequest->withUri($this->apiUri->withPath('/api/v1/funds-transfers/' . $id))
-            ->withMethod('GET');
-
-        $response =  $this->client->sendRequest($request);
+        $response = $this->tryGetFundsTransfer($id);
         $this->assertResponseStatus(self::HTTP_STATUS_OK, $response->getStatusCode());
 
         return $response->document()->primaryResource();
+    }
+
+    private function tryGetFundsTransfer($id): JsonApiResponse
+    {
+        $request = $this->apiRequest->withUri($this->apiUri->withPath('/api/v1/funds-transfers/' . $id))
+            ->withMethod('GET');
+
+        return $this->client->sendRequest($request);
     }
 
     private function tryCreateFundsTransfer($originUserId, $destinationUserId, $amount, UuidInterface $transferId): JsonApiResponse
